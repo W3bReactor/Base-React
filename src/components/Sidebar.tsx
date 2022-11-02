@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { SidebarList } from './SidebarList';
 import styled from 'styled-components';
 import { Colors } from './styles';
-import { data } from '../constants/mock';
+import { IData } from '../types/mockTypes';
 
 interface SidebarProps {
-	data: data[];
+	data: IData[];
 	setActiveGenre: (activeGenre: number) => void;
 	activeGenre: number;
 }

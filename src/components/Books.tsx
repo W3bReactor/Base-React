@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Book } from './Book';
 import styled, { css } from 'styled-components';
-import { book } from '../constants/mock';
+import { IBook } from '../types/mockTypes';
 
 interface BooksProps {
-	books: book[];
+	books: IBook[];
 }
 export const Books: FC<BooksProps> = ({ books }) => {
 	return (

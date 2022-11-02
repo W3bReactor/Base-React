@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { SidebarItem } from './SidebarItem';
-import { data } from '../constants/mock';
 import styled from 'styled-components';
+import { IData } from '../types/mockTypes';
 
 interface SidebarListProps {
-	data: data[];
+	data: IData[];
 	setActiveGenre: (activeGenre: number) => void;
 	activeGenre: number;
 }

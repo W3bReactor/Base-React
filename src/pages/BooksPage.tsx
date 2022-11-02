@@ -1,17 +1,23 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styled from 'styled-components';
-import { book } from '../constants/mock';
-import { Books } from '../components';
+import { kindsArt } from '../utils/mock';
+import { Books, Sidebar } from '../components';
 
-interface BooksPageProps {
-	books: book[];
-}
+export const BooksPage: FC = () => {
+	const [active, setActive] = useState(0);
+	const books = kindsArt[active].books;
 
-export const BooksPage: FC<BooksPageProps> = ({ books }) => {
 	return (
-		<BooksContent>
-			<Books books={books} />
-		</BooksContent>
+		<>
+			<Sidebar
+				activeGenre={active}
+				setActiveGenre={setActive}
+				data={kindsArt}
+			/>
+			<BooksContent>
+				<Books books={books} />
+			</BooksContent>
+		</>
 	);
 };
 

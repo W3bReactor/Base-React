@@ -1,31 +1,6 @@
-export interface data {
-	id: string;
-	name: string;
-	books: book[];
-}
+import { IData } from '../types/mockTypes';
 
-export interface book {
-	id: string;
-	name: string;
-	author: string;
-	genre: string;
-	price: number;
-	annotation: string;
-	reviews: review[];
-}
-
-export interface review {
-	id: string;
-	user: user;
-	text: string;
-}
-
-export interface user {
-	id: string;
-	name: string;
-}
-
-export const kindsArt: data[] = [
+export const kindsArt: IData[] = [
 	{
 		id: '63625507d9a723bc75ddc795',
 		name: 'Художественная литература',

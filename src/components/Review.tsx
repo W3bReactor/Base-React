@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Card, Colors } from './styles';
+import { IReview } from '../types/mockTypes';
 
-export const Review = () => {
+interface ReviewProps {
+	review: IReview;
+}
+
+export const Review: FC<ReviewProps> = ({ review }) => {
+	const { user, text } = review;
 	return (
 		<ReviewWrapper>
-			<Author>Анна К.</Author>
-			<Text>
-				С книгами Маргариты Блиновой я познакомилась , начиная с гарпии. И с тех
-				пор ожидаю от них юмора, юмора и еще раз юмора. Не важно, какой мир, не
-				важно кто - герои, некроманты, или неизвестные науки расы, главное -
-				обстоятельства, дружба и юмор. Все это, и даже с лишком, воплотилось в
-				книжке &ldquo;Несносное проклятье некроманта&rdquo;.
-			</Text>
+			<Author>{user.name}</Author>
+			<Text>{text}</Text>
 		</ReviewWrapper>
 	);
 };

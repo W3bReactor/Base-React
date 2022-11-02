@@ -36,7 +36,7 @@ const CounterNumber = styled.p<{ count?: number }>`
 	line-height: 33px;
 	color: ${Colors.DARK};
 	transition: opacity 0.3s;
-	${(props) => (props.count === 0 ? 'opacity: 0.5' : '')}
+	opacity: ${(props) => props.count === 0 && '0.5'};
 `;
 
 const CounterButton = styled.button<{ count?: number }>`
