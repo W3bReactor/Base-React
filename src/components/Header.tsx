@@ -1,12 +1,16 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Colors, Container } from './styles';
-
+import { Link } from 'react-router-dom';
+import cart from '../assets/images/cart.svg';
 export const Header: FC = () => {
 	return (
 		<HeaderWrapper>
 			<HeaderInner>
-				<Link href="src/components/Header#">Магазин</Link>
+				<HeaderLink to="/">Магазин</HeaderLink>
+				<Link to="/cart">
+					<img src={cart} alt="Корзина" />
+				</Link>
 			</HeaderInner>
 		</HeaderWrapper>
 	);
@@ -25,7 +29,8 @@ const HeaderInner = styled.div`
 	padding: 20px 0;
 	color: ${Colors.LIGHT};
 `;
-const Link = styled.a`
+
+const HeaderLink = styled(Link)`
 	text-decoration: none;
 	font-weight: 700;
 	font-size: 20px;

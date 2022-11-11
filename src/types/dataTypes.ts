@@ -7,8 +7,9 @@ export interface IData {
 export interface IBook {
 	id: string;
 	name: string;
-	author: string;
-	genre: string;
+	authors: string[];
+	mark: number;
+	subgenre: string;
 	price: number;
 	annotation: string;
 	reviews: IReview[];
@@ -18,6 +19,7 @@ export interface IReview {
 	id: string;
 	user: IUser;
 	text: string;
+	rating: number;
 }
 
 export interface IUser {

@@ -1,25 +1,50 @@
-import React, { FC } from 'react';
-import { Book } from './Book';
+import React, { FC, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { IBook } from '../types/mockTypes';
+import { useAppSelector } from '../hooks/useAppSelector';
+import {
+	selectBooks,
+	selectBooksStatus,
+} from '../store/slices/books/selectors';
+import { selectActiveGenre } from '../store/slices/genres/selectors';
+import { fetchBooks } from '../store/slices/books';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { Status } from '../store/common/enums';
+import { Book } from './Book';
+import { Preloader } from './Preloader';
 
-interface BooksProps {
-	books: IBook[];
-}
-export const Books: FC<BooksProps> = ({ books }) => {
+export const Books: FC = () => {
+	const dispatch = useAppDispatch();
+	const books = useAppSelector(selectBooks);
+	const status = useAppSelector(selectBooksStatus);
+	const activeGenre = useAppSelector(selectActiveGenre);
+	const fetchBookById = async (id: string) => {
+		dispatch(fetchBooks(id));
+	};
+
+	useEffect(() => {
+		if (activeGenre) {
+			fetchBookById(activeGenre);
+		}
+	}, [activeGenre]);
+
 	return (
 		<List>
-			{books.map((book) => (
-				<ListItem key={book.id}>
-					<Book
-						price={book.price}
-						title={book.name}
-						author={book.author}
-						genre={book.genre}
-						styles={BookStyles}
-					/>
-				</ListItem>
-			))}
+			{Status.LOADING === status && <Preloader />}
+			{Status.SUCCESS === status &&
+				books.map((book) => (
+					<ListItem key={book.id}>
+						<Book
+							withLink={true}
+							id={book.id}
+							price={book.price}
+							title={book.name}
+							authors={book.authors}
+							subgenre={book.subgenre}
+							styles={BookStyles}
+						/>
+					</ListItem>
+				))}
+			{Status.FAILED === status && <div>Не удалось получить книги</div>}
 		</List>
 	);
 };
@@ -30,6 +55,7 @@ const BookStyles = css`
 
 const List = styled.ul`
 	list-style: none;
+	text-decoration: none;
 `;
 
 const ListItem = styled.li`

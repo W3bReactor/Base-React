@@ -2,33 +2,52 @@ import React, { FC } from 'react';
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 import { Card, Colors } from './styles';
 import { Counter } from './Counter';
+import { Link } from 'react-router-dom';
+import rating from '../assets/images/rating.png';
 
 interface BookProps {
 	styles?: FlattenSimpleInterpolation;
 	title?: string;
-	author?: string;
-	genre?: string;
+	id: string;
+	authors?: string[];
+	subgenre?: string;
 	price?: number;
+	withLink: boolean;
 }
 
 export const Book: FC<BookProps> = ({
 	styles,
-	price = '250',
-	genre = 'Фэнтези',
+	id,
+	price = 250,
+	subgenre = 'Фэнтези',
 	title = 'Несносное проклятье некроманта',
-	author = 'Блинова Маргарита',
+	authors = ['Блинова Маргарита'],
+	withLink,
 }) => {
 	return (
 		<BookWrapper styles={styles}>
 			<BookContent>
-				<Title>{title}</Title>
+				{withLink ? (
+					<ListLink to={`books/${id}`}>
+						<Title>{title}</Title>
+					</ListLink>
+				) : (
+					<Title>{title}</Title>
+				)}
 				<BookContentCenter>
-					<Author>{author}</Author>
-					<Genre>{genre}</Genre>
+					<Author>{authors?.join(', ')}</Author>
+					<Genre>{subgenre}</Genre>
+					<Rating src={rating} alt="Рейтинг" />
 				</BookContentCenter>
 				<Price>{price} ₽</Price>
 			</BookContent>
-			<Counter />
+			<Counter
+				price={price}
+				title={title}
+				authors={authors}
+				subgenre={subgenre}
+				id={id}
+			/>
 		</BookWrapper>
 	);
 };
@@ -58,6 +77,11 @@ const Title = styled.h2`
 	color: ${Colors.DARK};
 `;
 
+const Rating = styled.img`
+	width: 100px;
+	height: 16px;
+`;
+
 const BookContentCenter = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -72,10 +96,12 @@ const InfoStyles = css`
 
 const Author = styled.p`
 	${InfoStyles};
+	margin-bottom: 8px;
 `;
 
 const Genre = styled.p`
 	${InfoStyles};
+	margin-bottom: 8px;
 `;
 
 const Price = styled.p`
@@ -83,4 +109,8 @@ const Price = styled.p`
 	font-size: 24px;
 	line-height: 33px;
 	color: ${Colors.DARK};
+`;
+
+const ListLink = styled(Link)`
+	text-decoration: none;
 `;

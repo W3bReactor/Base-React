@@ -1,15 +1,47 @@
-import React from 'react';
-import { Annotation, Book, Reviews } from '../components';
+import React, { useEffect } from 'react';
+import { Annotation, Book, Preloader, Reviews } from '../components';
 import styled, { css } from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { selectBook, selectBooksStatus } from '../store/slices/books/selectors';
+import { Status } from '../store/common/enums';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { fetchBook } from '../store/slices/books';
 
 export const BookPage = () => {
+	const dispatch = useAppDispatch();
+	const { id } = useParams();
+	const book = useAppSelector(selectBook(id));
+	const status = useAppSelector(selectBooksStatus);
+	const fetchBookById = (id: string) => {
+		dispatch(fetchBook(id));
+	};
+	useEffect(() => {
+		if (id) {
+			fetchBookById(id);
+		}
+	}, []);
 	return (
 		<BookWrapper>
-			<BookInfo>
-				<Book styles={BookStyles} />
-				<Annotation styles={AnnotationStyles} />
-			</BookInfo>
-			<Reviews />
+			{status === Status.LOADING && <Preloader />}
+			{status === Status.SUCCESS && book && (
+				<>
+					{' '}
+					<BookInfo>
+						<Book
+							withLink={false}
+							id={book.id}
+							title={book.name}
+							price={book.price}
+							subgenre={book.subgenre}
+							authors={book.authors}
+							styles={BookStyles}
+						/>
+						<Annotation text={book.annotation} styles={AnnotationStyles} />
+					</BookInfo>
+					<Reviews reviews={book.reviews} />
+				</>
+			)}
 		</BookWrapper>
 	);
 };

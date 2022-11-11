@@ -1,21 +1,13 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
-import { kindsArt } from '../utils/mock';
-import { Books, Sidebar } from '../components';
+import { Books, Genres } from '../components';
 
 export const BooksPage: FC = () => {
-	const [active, setActive] = useState(0);
-	const books = kindsArt[active].books;
-
 	return (
 		<>
-			<Sidebar
-				activeGenre={active}
-				setActiveGenre={setActive}
-				data={kindsArt}
-			/>
+			<Genres />
 			<BooksContent>
-				<Books books={books} />
+				<Books />
 			</BooksContent>
 		</>
 	);

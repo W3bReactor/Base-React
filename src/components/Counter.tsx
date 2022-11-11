@@ -1,23 +1,51 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import minus from '../assets/images/minus.svg';
 import plus from '../assets/images/plus.svg';
 import { Colors } from './styles';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { addEntity, removeEntity } from '../store/slices/cart';
+import { selectCartEntityById } from '../store/slices/cart/selectors';
 
-export const Counter: FC = () => {
-	const [count, setCount] = useState(0);
+interface CounterProps {
+	id: string;
+	price: number;
+	subgenre: string;
+	title: string;
+	authors: string[];
+}
 
+export const Counter: FC<CounterProps> = ({
+	id,
+	price,
+	title,
+	subgenre,
+	authors,
+}) => {
+	const count = useAppSelector(selectCartEntityById(id))?.count || 0;
+	const dispatch = useAppDispatch();
+	const cartEntity = {
+		price,
+		name: title,
+		subgenre,
+		authors,
+		id,
+	};
 	return (
 		<CounterWrapper>
 			<CounterButton
+				onClick={() => dispatch(removeEntity(cartEntity))}
 				count={count}
 				disabled={count === 0}
-				onClick={() => setCount(count - 1)}
 			>
 				<img src={minus} alt="-" />
 			</CounterButton>
 			<CounterNumber count={count}>{count}</CounterNumber>
-			<CounterButton count={count} onClick={() => setCount(count + 1)}>
+			<CounterButton
+				onClick={() => dispatch(addEntity(cartEntity))}
+				count={count}
+			>
 				<img src={plus} alt="+" />
 			</CounterButton>
 		</CounterWrapper>

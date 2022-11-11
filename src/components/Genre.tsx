@@ -4,21 +4,11 @@ import { Colors } from './styles';
 
 interface ListElementProps {
 	children: React.ReactNode;
-	href: string;
 	isActiveGenre?: boolean;
 }
 
-export const SidebarItem: FC<ListElementProps> = ({
-	children,
-	href,
-	isActiveGenre,
-}) => {
-	console.log(isActiveGenre);
-	return (
-		<Link isActiveGenre={isActiveGenre} href={href}>
-			{children}
-		</Link>
-	);
+export const Genre: FC<ListElementProps> = ({ children, isActiveGenre }) => {
+	return <Link isActiveGenre={isActiveGenre}>{children}</Link>;
 };
 
 const Styles = css`
@@ -30,11 +20,11 @@ const Styles = css`
 const Link = styled.a<{ isActiveGenre?: boolean }>`
 	${Styles};
 	text-decoration: none;
+	cursor: pointer;
 	transition: 0.3s all;
 	${(props) =>
-		props.isActiveGenre
-			? `text-shadow: 0 0 0.65px ${Colors.DARK}, 0 0 0.65px ${Colors.DARK}`
-			: ''};
+		props.isActiveGenre &&
+		`text-shadow: 0 0 0.65px ${Colors.DARK}, 0 0 0.65px ${Colors.DARK}`};
 	:hover {
 		text-shadow: 0 0 0.65px ${Colors.DARK}, 0 0 0.65px ${Colors.DARK};
 	}

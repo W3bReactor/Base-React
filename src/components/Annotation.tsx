@@ -4,18 +4,14 @@ import { Card, Colors } from './styles';
 
 interface AnnotationProps {
 	styles: FlattenSimpleInterpolation;
+	text: string;
 }
 
-export const Annotation: FC<AnnotationProps> = ({ styles }) => {
+export const Annotation: FC<AnnotationProps> = ({ styles, text }) => {
 	return (
 		<AnnotationWrapper styles={styles}>
 			<Title>Аннотация</Title>
-			<Text>
-				Не знаешь, что делать дальше? Сломала мозг в попытках ответить на
-				вопрос, где заработать честной девушке-артефактору? Устала от
-				однообразных предложений изготовить &ldquo;что-нибудь для вечной
-				любви&rdquo;? Подумай о некромантии!
-			</Text>
+			<Text>{text}</Text>
 			<Text>
 				Присоединяйся к дружной компании черных магов и просто любителей гулять
 				по ночным кладбищам. Ведь с ними твоя жизнь заиграет всеми оттенками

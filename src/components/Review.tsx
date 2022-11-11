@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
 import { Card, Colors } from './styles';
-import { IReview } from '../types/mockTypes';
+import { IReview } from '../types/dataTypes';
 
 interface ReviewProps {
 	review: IReview;
